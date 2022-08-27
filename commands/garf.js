@@ -1,11 +1,10 @@
 const { SlashCommandBuilder } = require("discord.js")
-const axios = require("axios")
-const { rapidAPIKey, rapidAPIHost } = require("../config.json")
+const { getImage } = require("gocomics-api")
 
-function getRandomInt(min, max) {
-  min = Math.ceil(min)
-  max = Math.floor(max)
-  return Math.floor(Math.random() * (max - min) + min) //The maximum is exclusive and the minimum is inclusive
+function randomDate(start, end) {
+  return new Date(
+    start.getTime() + Math.random() * (end.getTime() - start.getTime())
+  )
 }
 
 module.exports = {
@@ -13,10 +12,13 @@ module.exports = {
     .setName("garf")
     .setDescription("Replies with a garf or something..."),
   async execute(interaction) {
-    const url = `https://www.mezzacotta.net/garfield/comics/${getRandomInt(
-      0,
-      4848
-    )}.png`
-    await interaction.reply(url)
+    const d = randomDate(new Date(2012, 0, 1), new Date())
+
+    const imageString = await getImage({
+      date: [d.getFullYear(), d.getMonth() + 1, d.getDate()],
+      comicName: "garfield",
+      URLOnly: true,
+    })
+    await interaction.reply(imageString)
   },
 }
