@@ -3,13 +3,13 @@ const { getComic } = require('../comicUtils')
 
 module.exports = {
   data: new SlashCommandBuilder()
-    .setName('garf')
-    .setDescription('Sends a random garf!'),
+    .setName('calvin')
+    .setDescription('Sends a random Calvin and Hobbes!'),
   async execute(interaction) {
     await interaction.deferReply()
 
-    const comicName = 'garfield'
-    const firstComicDate = new Date(1978, 5, 19)
+    const comicName = 'calvinandhobbes'
+    const firstComicDate = new Date(1985, 10, 18)
 
     try {
       const imageString = await getComic(comicName, firstComicDate)
